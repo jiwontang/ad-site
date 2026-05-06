@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>청년도약계좌 계산기 - YouthFinance</title>
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="youth-account.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <div class="logo">
+                    <a href="../index.html">YouthFinance</a>
+                </div>
+                <nav>
+                    <a href="../index.html">홈</a>
+                    <a href="youth-account.html">청년도약계좌</a>
+                    <a href="#">대출 정보</a>
+                    <a href="#">저축 상품</a>
+                    <a href="#">문의</a>
+                </nav>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1>청년도약계좌 계산기</h1>
+                <p>월 납입 금액, 기간, 금리를 입력하고 예상 수익을 계산하세요</p>
+            </div>
+        </section>
+
+        <!-- Calculator Section -->
+        <section class="calculator-section">
+            <div class="container">
+                <div class="calculator-wrapper">
+                    <!-- Input Form -->
+                    <div class="calculator-form">
+                        <h2>계산 정보 입력</h2>
+                        
+                        <div class="form-group">
+                            <label for="monthly-amount">월 납입 금액 (원)</label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="number" 
+                                    id="monthly-amount" 
+                                    placeholder="예: 500000" 
+                                    min="10000" 
+                                    max="5000000" 
+                                    value="500000"
+                                >
+                                <span class="input-hint">최소: 10,000원 / 최대: 5,000,000원</span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="duration-years">가입 기간</label>
+                                <div class="duration-inputs">
+                                    <div class="duration-input-group">
+                                        <input 
+                                            type="number" 
+                                            id="duration-years" 
+                                            placeholder="년" 
+                                            min="0" 
+                                            max="10"
+                                            value="5"
+                                        >
+                                        <span class="duration-label">년</span>
+                                    </div>
+                                    <div class="duration-input-group">
+                                        <input 
+                                            type="number" 
+                                            id="duration-months" 
+                                            placeholder="개월" 
+                                            min="0" 
+                                            max="11"
+                                            value="0"
+                                        >
+                                        <span class="duration-label">개월</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="interest-rate">예상 금리 (%)</label>
+                                <div class="input-wrapper">
+                                    <input 
+                                        type="number" 
+                                        id="interest-rate" 
+                                        placeholder="예: 5.0" 
+                                        min="0" 
+                                        max="20" 
+                                        step="0.1"
+                                        value="5.0"
+                                    >
+                                    <span class="input-hint">연 금리</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="calculate-btn" class="btn btn-primary btn-large">계산하기</button>
+                    </div>
+
+                    <!-- Result Display -->
+                    <div class="calculator-result">
+                        <h2>계산 결과</h2>
+                        
+                        <div class="result-item">
+                            <div class="result-label">원금 합계</div>
+                            <div class="result-value" id="total-invested">₩0</div>
+                        </div>
+
+                        <div class="result-item">
+                            <div class="result-label">정부지원금 합계</div>
+                            <div class="result-value" id="govt-support">₩0</div>
+                        </div>
+
+                        <div class="result-item">
+                            <div class="result-label">은행이자 합계 (비과세)</div>
+                            <div class="result-value" id="total-interest">₩0</div>
+                        </div>
+
+                        <div class="result-item highlight">
+                            <div class="result-label">최종 수령액</div>
+                            <div class="result-value" id="total-amount">₩0</div>
+                        </div>
+
+                        <div class="result-chart">
+                            <canvas id="chart"></canvas>
+                        </div>
+
+                        <div class="result-footer">
+                            <p><strong>참고:</strong> 본 계산은 예상치이며, 실제 이자 계산은 금융기관 규정에 따라 달라질 수 있습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <div class="container">
+                <h2 class="section-title">청년도약계좌란?</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>개요</h3>
+                        <p>청년층의 자산 형성을 지원하기 위해 정부가 마련한 정책상품입니다. 월 적립금에 대해 적립장려금과 이자를 받을 수 있습니다.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>가입 대상</h3>
+                        <p>만 18~39세 무직자 또는 저소득 근로자(연 2,400만원 이하)로 금융자산 6,000만원 미만인 자</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>적금 기간</h3>
+                        <p>3년 또는 5년 중 선택 가능합니다. 매월 10만원~100만원을 자유롭게 납입할 수 있습니다.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>혜택</h3>
+                        <p>월 납입액의 10~20% 범위 내 정부 적립장려금과 연 4~5% 이자를 지급받을 수 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conversion Guide Section -->
+        <section class="conversion-section">
+            <div class="container">
+                <h2 class="section-title">전환 가이드</h2>
+                <p class="section-subtitle">청년도약계좌에서 청년미래적금으로 전환할 수 있을까?</p>
+                
+                <div class="guide-intro">
+                    <p>두 상품은 동시 가입이 불가능합니다. 전환 방법, 중도해지 손실, 만기 후 가입 여부까지 한눈에 정리했습니다.</p>
+                </div>
+
+                <div class="guide-grid">
+                    <div class="guide-card guide-card-danger">
+                        <div class="guide-icon">❌</div>
+                        <h3>동시 가입 불가</h3>
+                        <p>청년도약계좌와 청년미래적금은 중복 가입이 안 됩니다.</p>
+                    </div>
+
+                    <div class="guide-card guide-card-warning">
+                        <div class="guide-icon">⚠️</div>
+                        <h3>중도해지 시 정부기여금 손실</h3>
+                        <p>청년도약계좌를 중도해지하면 정부기여금을 받지 못합니다.</p>
+                    </div>
+
+                    <div class="guide-card guide-card-success">
+                        <div class="guide-icon">✅</div>
+                        <h3>만기 후 가입 가능</h3>
+                        <p>청년도약계좌 만기 수령 후 자격 요건을 충족하면 신규 가입 가능합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-section">
+                <h4>YouthFinance</h4>
+                <ul>
+                    <li><a href="../index.html">홈</a></li>
+                    <li><a href="#">서비스</a></li>
+                    <li><a href="#">문의</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>정보</h4>
+                <ul>
+                    <li><a href="#">개인정보처리방침</a></li>
+                    <li><a href="#">이용약관</a></li>
+                    <li><a href="#">고객지원</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>문의</h4>
+                <ul>
+                    <li>Email: info@youthfinance.com</li>
+                    <li>Tel: 1577-1234</li>
+                    <li>운영시간: 09:00 ~ 18:00</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 YouthFinance. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../assets/js/common.js"></script>
+    <script src="youth-account.js"></script>
+</body>
+</html>
